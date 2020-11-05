@@ -6,10 +6,6 @@
 #include <utility>
 
 namespace Akura {
-    template <class... Args> struct Zip;
-
-    template <class... Args> Zip(Args &&...) -> Zip<Args...>;
-
     template <class... Args> struct Iterator;
 
     template <class T> struct Iterator<T> {
@@ -60,13 +56,19 @@ namespace Akura {
                     iteratorGenerator(std::forward<F>(f), std::forward<Args>(args)...));
         }
 
-    template <class... Args> struct Zip {
-        Iterator<Args...> _begin;
-        Iterator<Args...> _end;
-        Zip(Args &&... args)
+    template <class T, class... Args> struct Zip;
+
+    template <class T, class... Args> Zip(T&&, Args &&...) -> Zip<T, Args...>;
+
+    template <class T, class... Args> struct Zip {
+        Iterator<T, Args...> _begin;
+        Iterator<T, Args...> _end;
+        Zip(T && t, Args &&... args)
             : _begin(iteratorGenerator([](auto &&cont) { return cont.begin(); },
+                        std::forward<T>(t),
                         std::forward<Args>(args)...)),
             _end(iteratorGenerator([](auto &&cont) { return cont.end(); },
+                        std::forward<T>(t),
                         std::forward<Args>(args)...)) {}
 
         constexpr inline auto begin() { return _begin; }
