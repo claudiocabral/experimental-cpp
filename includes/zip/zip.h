@@ -61,8 +61,9 @@ namespace Akura {
     template <class T, class... Args> Zip(T&&, Args &&...) -> Zip<T, Args...>;
 
     template <class T, class... Args> struct Zip {
-        Iterator<T, Args...> _begin;
-        Iterator<T, Args...> _end;
+        using iterator = Iterator<T, Args...>;
+        iterator _begin;
+        iterator _end;
         Zip(T && t, Args &&... args)
             : _begin(iteratorGenerator([](auto &&cont) { return cont.begin(); },
                         std::forward<T>(t),
