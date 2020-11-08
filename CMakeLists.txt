@@ -6,6 +6,8 @@ add_subdirectory(Catch2)
 include(CTest)
 include(Catch2/contrib/Catch.cmake)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 set(TEST_BIN tests)
 
 set(TEST_SRCS
