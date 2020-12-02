@@ -13,6 +13,7 @@ set(TEST_BIN tests)
 set(TEST_SRCS
   tests/main.cpp
   tests/zip/zip.cpp
+  tests/zip/benchmarks.cpp
   )
 
 set(TEST_INCLUDES
